@@ -15,6 +15,9 @@ app.layout = html.Div([
         "Created by Kate, to be further developed by ",
         html.Span("Hacker Cam (TM)", style={"color": "blue", "fontWeight": "bold"})
     ]),
+    html.Br(),
+    html.Br(),
+    dcc.Graph(id="plot"),
     dash_table.DataTable(
         id="table",
         data=df.to_dict("records"),
@@ -24,10 +27,7 @@ app.layout = html.Div([
         sort_action="native",
         row_selectable="multi",
         page_size=10
-    ),
-
-    dcc.Graph(id="plot")
-
+    )
 ])
 
 @app.callback(
@@ -46,13 +46,13 @@ def update_graph(rows, selected_rows):
     
     if "Fruit" in dff.columns:
 
-        fig = px.bar(dff, x="Fruit", y="Rating", title="Cam's Fruit Rankings", color="Fruit")
+        fig = px.bar(dff.loc[dff.Rating > 0.0], x="Fruit", y="Rating", title="Cam's Fruit Rankings", color="Fruit")
 
         fig.update_layout(
             legend=dict(
                 orientation="h",  # Horizontal orientation
                 yanchor="bottom", # Anchor to the bottom
-                y=-1.7,           # Position below the plot (adjust as needed)
+                y=-0.5,           # Position below the plot (adjust as needed)
                 xanchor="left",   # Anchor to the left
                 x=0,              # Start at the left margin
                 font=dict(
@@ -63,6 +63,7 @@ def update_graph(rows, selected_rows):
             margin=dict(l=20, r=20, t=30, b=100), # Adjust margins to prevent overlap
             autosize=True,
             uniformtext_minsize=8, uniformtext_mode='hide',
+            height=600
         )
 
         fig.update_xaxes(title_text="")
