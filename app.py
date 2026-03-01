@@ -48,6 +48,24 @@ def update_graph(rows, selected_rows):
 
         fig = px.bar(dff, x="Fruit", y="Rating", title="Cam's Fruit Rankings", color="Fruit")
 
+        fig.update_layout(
+            legend=dict(
+                orientation="h",  # Horizontal orientation
+                yanchor="bottom", # Anchor to the bottom
+                y=-1.7,           # Position below the plot (adjust as needed)
+                xanchor="left",   # Anchor to the left
+                x=0,              # Start at the left margin
+                font=dict(
+                    size=10       # Smaller font size
+                ),
+                maxheight=0.3     # Limit legend height to 30% of figure
+            ),
+            margin=dict(l=20, r=20, t=30, b=100), # Adjust margins to prevent overlap
+            autosize=True,
+            uniformtext_minsize=8, uniformtext_mode='hide',
+        )
+
+        fig.update_xaxes(title_text="")
 
         return fig
 
